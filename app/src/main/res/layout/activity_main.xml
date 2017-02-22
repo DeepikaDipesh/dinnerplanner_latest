@@ -1,0 +1,184 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="0dp" tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:id="@+id/mainPage">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF"
+        android:orientation="horizontal"
+        android:id="@+id/participantsprice"
+        android:layout_marginBottom="0dp">
+
+
+        <TextView
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Participants:"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:id="@+id/participants" />
+
+        <EditText
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/No_of_participants"
+            android:text="0"
+            android:editable="false"
+            android:numeric="integer" />
+
+
+        <TextView
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="Total cost:"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:id="@+id/totalcost" />
+
+        <TextView
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_horizontal"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:id="@+id/Cost" />
+
+
+    </LinearLayout>
+
+
+    <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_column="0"
+                    android:layout_marginStart="5dp"
+                    android:text="Choose Menu"
+                    android:textColor="#000"
+                    android:textSize="20sp"
+                    android:id="@+id/Choosemenu" />
+
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/black" 
+        android:layout_marginTop="5dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:id="@+id/starter">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Starter"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
+            android:id="@+id/Startertitle"/>
+
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:id="@+id/gridViewStarter"
+            android:numColumns="3"
+            android:layout_weight="5"
+            android:fastScrollEnabled="false"
+            android:smoothScrollbar="false" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:id="@+id/maincourse">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Maincourse"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
+            android:id="@+id/Maincoursetitle"/>
+
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:id="@+id/gridViewMaincourse"
+            android:numColumns="3"
+            android:layout_weight="5"
+            android:fastScrollEnabled="false"
+            android:smoothScrollbar="false" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:layout_above="@+id/button"
+        android:id="@+id/desert">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Desert"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
+            android:id="@+id/Deserttitle"/>
+
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:id="@+id/gridViewDesert"
+            android:numColumns="3"
+            android:layout_weight="5"
+            android:fastScrollEnabled="false"
+            android:smoothScrollbar="false" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Create"
+        android:id="@+id/Create_button"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="0dp"
+        android:background="#ffd0e6" />
+
+</LinearLayout>

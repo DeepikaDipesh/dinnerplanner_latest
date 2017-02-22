@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">DinnerPlanner</string>
+    <string name="hello_world">Welcome to dinner planner!!!</string>
+    <string name="action_settings">Settings</string>
+    <integer name="grid_settings">3</integer>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_first">FirstActivity</string>
+
+</resources>
