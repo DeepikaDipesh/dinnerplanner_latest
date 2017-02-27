@@ -1,7 +1,6 @@
 package se.kth.csc.iprog.dinnerplanner.android;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -10,43 +9,43 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.Iterator;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Set;
 
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
-import se.kth.csc.iprog.dinnerplanner.model.DinnerPlanner;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
 
-public class Main2Activity extends Activity implements View.OnClickListener {
+public class Main2Activity extends Activity implements View.OnClickListener, Observer{
 
-    DinnerPlanner.MenuCalculator data = DinnerPlanner.MenuCalculator.getInstance();
-    DinnerModel finallist = new DinnerModel();
+    DinnerModel finallist;
+    TextView finalParticipantsValue;
+    TextView finalCostValue;
+    TextView description;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-
         Intent receive_intent = getIntent();
+        finallist = ((DinnerPlannerApplication)getApplication()).getModel();
+       finallist.addObserver(this);
 
-        DinnerModel dishes = (DinnerModel) getIntent().getSerializableExtra("mainActivityObject");
+        finalParticipantsValue = ((TextView) findViewById(R.id.totalNoOfParticipants));
+        finalParticipantsValue.setText(String.valueOf(finallist.getNumberOfGuests()));
 
-        TextView finalParticipantsValue = ((TextView) findViewById(R.id.totalNoOfParticipants));
-        finalParticipantsValue.setText(String.valueOf(data.getNumberOfGuests()));
 
-        TextView finalCostValue = (TextView) findViewById(R.id.finalCostValue);
-        finalCostValue.setText(String.valueOf(data.getTotalMenuPrice()));
-
+        finalCostValue = (TextView) findViewById(R.id.finalCostValue);
+        finalCostValue.setText(String.valueOf(finallist.getTotalMenuPrice()));
 
         //ingredientButton.
         ImageButton ingredientButton = (ImageButton) findViewById(R.id.ingredients);
-        TextView description = (TextView) findViewById(R.id.description);
-        Set<Ingredient> listOfIngredients = data.getAllIngredients();
+        description = (TextView) findViewById(R.id.description);
+        Set<Ingredient> listOfIngredients = finallist.getAllIngredients();
         Iterator<Ingredient> _listOfAllIngredientsIterator = listOfIngredients.iterator();
         while (_listOfAllIngredientsIterator.hasNext()) {
             Ingredient _ingredients = _listOfAllIngredientsIterator.next();
@@ -66,7 +65,7 @@ public class Main2Activity extends Activity implements View.OnClickListener {
         ImageButton maincourserecipeButton = (ImageButton) findViewById(R.id.maincourserecipe);
         ImageButton starterreceipeButton = (ImageButton) findViewById(R.id.starterrecipe);
         ImageButton desertrecipeButton = (ImageButton) findViewById(R.id.desertrecipe);
-        starterreceipeButton.setOnClickListener(this);
+       starterreceipeButton.setOnClickListener(this);
         maincourserecipeButton.setOnClickListener(this);
         desertrecipeButton.setOnClickListener(this);
         ingredientButton.setOnClickListener(this);
@@ -82,7 +81,7 @@ public class Main2Activity extends Activity implements View.OnClickListener {
             case R.id.starterrecipe:
                 //display recipe on button click
                 int i=0;
-                Set<Dish> finalStarterList = data.getFullMenu();
+                Set<Dish> finalStarterList = finallist.getFullMenu();
                 int size = finalStarterList.size();
                 TextView description = (TextView) findViewById(R.id.description);
                 description.setMovementMethod(new ScrollingMovementMethod());
@@ -105,7 +104,7 @@ public class Main2Activity extends Activity implements View.OnClickListener {
 
             case R.id.maincourserecipe:
                 i= 0;
-                Set<Dish> finalMainCourseList = data.getFullMenu();
+                Set<Dish> finalMainCourseList = finallist.getFullMenu();
                 size = finalMainCourseList.size();
                 Iterator<Dish> _finalMainCourseList = finalMainCourseList.iterator();
                 while (_finalMainCourseList.hasNext()) {
@@ -128,7 +127,7 @@ public class Main2Activity extends Activity implements View.OnClickListener {
 
             case R.id.desertrecipe:
                 i= 0;
-                Set<Dish> finalDesertList = data.getFullMenu();
+                Set<Dish> finalDesertList = finallist.getFullMenu();
                 size = finalDesertList.size();
                 Iterator<Dish> _finalDesertList = finalDesertList.iterator();
                 while (_finalDesertList.hasNext()) {
@@ -151,7 +150,7 @@ public class Main2Activity extends Activity implements View.OnClickListener {
             case R.id.ingredients:
                 description = (TextView) findViewById(R.id.description);
                 description.setText("\n");
-                Set<Ingredient> listOfIngredients = data.getAllIngredients();
+                Set<Ingredient> listOfIngredients = finallist.getAllIngredients();
                 Iterator<Ingredient> _listOfAllIngredientsIterator = listOfIngredients.iterator();
                 while (_listOfAllIngredientsIterator.hasNext()) {
                     Ingredient _ingredients = _listOfAllIngredientsIterator.next();
@@ -191,7 +190,14 @@ public class Main2Activity extends Activity implements View.OnClickListener {
 
             return super.onOptionsItemSelected(item);
         }
+
+    @Override
+    public void update(Observable observable, Object o) {
+       // finalCostValue.setText(String.valueOf(finallist.getTotalMenuPrice()));
+      //  description.setText(String.valueOf(finallist.getAllIngredients()));
     }
+
+}
 
 
 

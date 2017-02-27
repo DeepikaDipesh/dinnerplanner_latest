@@ -30,16 +30,14 @@
             android:textStyle="bold"
             android:id="@+id/participants" />
 
-        <EditText
-            android:layout_weight="1"
-            android:layout_width="0dp"
+
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/No_of_participants"
-            android:text="0"
-            android:editable="false"
-            android:numeric="integer" />
+            android:entries="@array/select_no_of_guest"
+            android:prompt="@string/select_no_of_guest_prompt"/>
+
 
 
         <TextView
@@ -112,7 +110,8 @@
             android:numColumns="3"
             android:layout_weight="5"
             android:fastScrollEnabled="false"
-            android:smoothScrollbar="false" />
+            android:smoothScrollbar="false"
+            />
     </LinearLayout>
 
     <LinearLayout

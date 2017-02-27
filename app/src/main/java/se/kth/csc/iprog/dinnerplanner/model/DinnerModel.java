@@ -6,15 +6,19 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observable;
 import java.util.Set;
 
-public class DinnerModel implements IDinnerModel{
+import se.kth.csc.iprog.dinnerplanner.android.Main2Activity;
+
+public class DinnerModel extends Observable implements IDinnerModel{
 	
 
 	Set<Dish> dishes = new HashSet<Dish>();
 	Set<Dish> selectedDishes = new HashSet<Dish>();
-
 	public int numberOfguests;
+
 	/**
 	 * TODO: For Lab2 you need to implement the IDinnerModel interface.
 	 * When you do this you will have all the needed fields and methods
@@ -170,12 +174,14 @@ public class DinnerModel implements IDinnerModel{
 
 	@Override
 	public int getNumberOfGuests() {
-		return 0;
+		return numberOfguests;
 	}
 
 	@Override
 	public void setNumberOfGuests(int numberOfGuests) {
-
+		this.numberOfguests = numberOfGuests;
+		setChanged();
+		notifyObservers(numberOfguests);
 	}
 
 	@Override
@@ -185,12 +191,14 @@ public class DinnerModel implements IDinnerModel{
 
 	@Override
 	public Set<Dish> getFullMenu() {
-		return null;
+		return this.selectedDishes;
 	}
 
 	@Override
 	public void addDishToMenu(Dish dish) {
-
+		selectedDishes.add(dish);
+		setChanged();
+		notifyObservers(selectedDishes);
 	}
 
 	@Override
@@ -224,7 +232,8 @@ public class DinnerModel implements IDinnerModel{
 				//IF the ingredient is already present in the  Total Ingredient List
 				if (_ingredientFromTheList != null) {
 					//Ingredient already present in total ingredient
-					_ingredientFromTheList.setPrice(_ingredientFromTheList.getPrice()+(_presentIngredient.getPrice()*getNumberOfGuests()));
+					_ingredientFromTheList.setPrice(_ingredientFromTheList.getPrice()+_presentIngredient.getPrice());
+					//+(_presentIngredient.getPrice()*getNumberOfGuests()));
 					_ingredientFromTheList.setQuantity(_ingredientFromTheList.getQuantity() +( _presentIngredient.getQuantity()*getNumberOfGuests()));
 
 				} else {
@@ -250,8 +259,9 @@ public class DinnerModel implements IDinnerModel{
 		float totalCost = 0;
 
 		while(ingredientIterator.hasNext()){
-			totalCost = (float) (totalCost + (ingredientIterator.next().getPrice() * (double) this.getNumberOfGuests()));
+			totalCost = (float) (totalCost + (ingredientIterator.next().getPrice() * this.getNumberOfGuests()));
 		}
 		return totalCost;
 	}
+
 }

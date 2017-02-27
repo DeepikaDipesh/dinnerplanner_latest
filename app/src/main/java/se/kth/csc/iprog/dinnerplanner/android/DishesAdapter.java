@@ -18,6 +18,7 @@ public class DishesAdapter extends BaseAdapter {
 
         private final Context mContext;
         private List<Dish> dishes_list;
+        Dish selectedDish = null;
 
         // 1
         public DishesAdapter(Context context, List<Dish> dishes_list) {
@@ -39,6 +40,11 @@ public class DishesAdapter extends BaseAdapter {
             return  position;
         }
 
+        public void setSelectedDishId(Dish dish){
+            selectedDish = dish;
+            notifyDataSetChanged();
+        }
+
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
@@ -48,13 +54,16 @@ public class DishesAdapter extends BaseAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             if (convertView == null) {
-
+                Dish dish = dishes_list.get(position);
                 grid = new View(mContext);
                 grid = inflater.inflate(R.layout.gridview_dishes, null);
                 TextView textView = (TextView) grid.findViewById(R.id.textview_dish_name);
                 ImageView imageView = (ImageView)grid.findViewById(R.id.imageview_dish_picture);
-                textView.setText(dishes_list.get(position).getName());
+                textView.setText(dish.getName());
 
+                if(dish == selectedDish) {
+                    grid.setSelected(true);
+                }
 
                 Context context = imageView.getContext();
                 String image = dishes_list.get(position).getImage();
@@ -68,5 +77,7 @@ public class DishesAdapter extends BaseAdapter {
 
             return grid;
         }
+
+
 }
 
