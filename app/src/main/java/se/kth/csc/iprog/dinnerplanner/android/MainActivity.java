@@ -47,7 +47,7 @@ public class MainActivity extends Activity implements Observer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dinnerModel = ((DinnerPlannerApplication) getApplication()).getModel();
-        //This is awesome so far comment 2
+        //Working in Rest Version
         dinnerModel.addObserver(this);
 
 
