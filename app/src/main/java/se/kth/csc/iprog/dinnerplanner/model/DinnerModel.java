@@ -1,5 +1,10 @@
 package se.kth.csc.iprog.dinnerplanner.model;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,6 +15,7 @@ import java.util.Observable;
 import java.util.Observable;
 import java.util.Set;
 
+import cz.msebera.android.httpclient.Header;
 import se.kth.csc.iprog.dinnerplanner.android.Main2Activity;
 
 public class DinnerModel extends Observable implements IDinnerModel{
@@ -141,6 +147,17 @@ public class DinnerModel extends Observable implements IDinnerModel{
 	 * Returns the set of dishes of specific type. (1 = starter, 2 = main, 3 = desert).
 	 */
 	public Set<Dish> getDishes(){
+		SpoonacularAPIClient.get("recipes/search", null, new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+				System.out.println(response.toString());
+			}
+
+			@Override
+			public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+				System.out.println(responseString);
+			}
+		});
 		return dishes;
 	}
 	
@@ -154,8 +171,11 @@ public class DinnerModel extends Observable implements IDinnerModel{
 				result.add(d);
 			}
 		}
+		this.getDishes(type);
 		return result;
 	}
+
+
 	
 	/**
 	 * Returns the set of dishes of specific type, that contain filter in their name
@@ -263,5 +283,41 @@ public class DinnerModel extends Observable implements IDinnerModel{
 		}
 		return totalCost;
 	}
+
+    public interface AsyncData {
+        public void onData(Object data);
+    }
+
+    public void getDishes( int type){
+        RequestParams params = new RequestParams();
+        if (type == Dish.STARTER){
+            System.out.println("===========Fetching starters============");
+            params.add("type","appetizer");
+        }
+        if (type == Dish.MAIN){
+            System.out.println("===========Fetching main course============");
+            params.add("type","main course");
+        }
+        if (type == Dish.DESERT){
+            System.out.println("===========Fetching Desserts============");
+            params.add("type","dessert");
+        }
+
+        SpoonacularAPIClient.get("recipes/search", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                System.out.println(response.toString());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                System.out.println(responseString);
+            }
+        });
+        System.out.println("==================================================");
+       // callback.onData(data); // You call the callback function once you have the results
+    }
+
+
 
 }
