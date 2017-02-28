@@ -4,13 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Dish {
-	/*"id": 216686,
-			"title": "Pork & noodle pan-fry with sweet & spicy sauce",
-			"readyInMinutes": 10,
-			"image": "Pork---noodle-pan-fry-with-sweet---spicy-sauce-216686.jpg",
-			"imageUrls": [
-			"Pork---noodle-pan-fry-with-sweet---spicy-sauce-216686.jpg"
-			*/
+
 	
 	public static final int STARTER = 1;
 	public static final int MAIN = 2;
@@ -21,8 +15,7 @@ public class Dish {
 	String image;
 	String description;
 	int price;
-	int id;
-	int title;
+
 	
 	Set<Ingredient> ingredients = new HashSet<Ingredient>();
 	

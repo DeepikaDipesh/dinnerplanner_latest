@@ -1,15 +1,23 @@
 package se.kth.csc.iprog.dinnerplanner.model;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observable;
@@ -148,16 +156,16 @@ public class DinnerModel extends Observable implements IDinnerModel{
 	 */
 	public Set<Dish> getDishes(){
 		SpoonacularAPIClient.get("recipes/search", null, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-				System.out.println(response.toString());
-			}
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                System.out.println(response.toString());
+            }
 
-			@Override
-			public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-				System.out.println(responseString);
-			}
-		});
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                System.out.println(responseString);
+            }
+        });
 		return dishes;
 	}
 	
@@ -171,7 +179,7 @@ public class DinnerModel extends Observable implements IDinnerModel{
 				result.add(d);
 			}
 		}
-		this.getDishes(type);
+
 		return result;
 	}
 
@@ -288,11 +296,12 @@ public class DinnerModel extends Observable implements IDinnerModel{
         public void onData(Object data);
     }
 
-    public void getDishes( int type){
+    public void getDishes( int type, final AsyncData callback){
+        final String tag = "API Result";
         RequestParams params = new RequestParams();
-        if (type == Dish.STARTER){
+        if (type == Dish.STARTER) {
             System.out.println("===========Fetching starters============");
-            params.add("type","appetizer");
+            params.add("type", "appetizer");
         }
         if (type == Dish.MAIN){
             System.out.println("===========Fetching main course============");
@@ -303,21 +312,32 @@ public class DinnerModel extends Observable implements IDinnerModel{
             params.add("type","dessert");
         }
 
-        SpoonacularAPIClient.get("recipes/search", params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                System.out.println(response.toString());
-            }
+            SpoonacularAPIClient.get("recipes/search", params, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                System.out.println(responseString);
-            }
-        });
-        System.out.println("==================================================");
-       // callback.onData(data); // You call the callback function once you have the results
-    }
+                    try {
+                        System.out.println(response.toString());
+                        JSONArray results = response.getJSONArray("results");
+                        System.out.println(results.toString());
+                        Log.d(tag, results.toString());
+                        Gson gson = new Gson();
+                        Type type = new TypeToken<List<DishModelSpoon>>(){}.getType();
+                        List<DishModelSpoon> dishes = gson.fromJson(results.toString(), type);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
 
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    System.out.println(responseString);
+                }
+            });
+            System.out.println("==================================================");
+            // callback.onData(data); // You call the callback function once you have the results
+        callback.onData(dishes);
+        }
 
 
 }
