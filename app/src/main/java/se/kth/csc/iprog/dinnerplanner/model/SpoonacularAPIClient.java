@@ -15,7 +15,7 @@ public class SpoonacularAPIClient {
         client.get(getAbsoluteUrl(url), params, responseHandler);
     }
 
-    private static String getAbsoluteUrl(String relativeUrl) {
+    public static String getAbsoluteUrl(String relativeUrl) {
         return BASE_URL + relativeUrl;
     }
 }

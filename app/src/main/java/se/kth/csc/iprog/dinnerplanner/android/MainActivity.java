@@ -15,6 +15,10 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -41,6 +45,7 @@ public class MainActivity extends Activity implements Observer {
     GridView gridView;
     DishesAdapter dishesAdapter;
     DishesAdapter_spoonified dishAdaptersSpoonified;
+    List<DishModelSpoon> dishesFromAPI;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -54,24 +59,24 @@ public class MainActivity extends Activity implements Observer {
 
         Set<Dish> starters = dinnerModel.getDishesOfType(Dish.STARTER);
         starters_list = new ArrayList<Dish>(starters);
-        List<DishModelSpoon> starters_list_Spoon;
 
+
+        // Defining Adapater for dishes form API
+        dishesFromAPI = new ArrayList<DishModelSpoon>();
         gridView = (GridView) findViewById(R.id.gridViewStarter);
       //  dishesAdapter = new DishesAdapter(this, starters_list);
-        dishAdaptersSpoonified = new DishesAdapter_spoonified(this, new List<DishModelSpoon>()
-        );
+        dishAdaptersSpoonified = new DishesAdapter_spoonified(this, dishesFromAPI);
         gridView.setAdapter(dishAdaptersSpoonified);
-
-
         dinnerModel.getDishes(Dish.STARTER, new DinnerModel.AsyncData() {
             @Override
             public void onData(Object dishes) {
      /* hide "waiting" widget ... */
      /* update the view with new dishes */
-                List<DishModelSpoon> starters_list_Spoon = createList(dishes);
 
-                dishesAdapter.notifyDataSetChanged();
-                gridView.setAdapter(this.get,starters_list_Spoon);
+                List<DishModelSpoon> starters_list_Spoon = createList(dishes);
+                dishesFromAPI.addAll(starters_list_Spoon);
+                dishAdaptersSpoonified.notifyDataSetChanged();
+
 
             }
         });
@@ -341,11 +346,14 @@ public class MainActivity extends Activity implements Observer {
     }
 
     private static List<DishModelSpoon>  createList(Object O) {
-        List<DishModelSpoon> otherList = new ArrayList<DishModelSpoon>();
+        List<DishModelSpoon> dishesFromAPI = new ArrayList<DishModelSpoon>();
         //do something here
-       otherList= (List<DishModelSpoon>) O;
-        return  otherList;
 
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<DishModelSpoon>>() {
+        }.getType();
+        dishesFromAPI = gson.fromJson(O.toString(), type);
+        return  dishesFromAPI;
     }
 
 }

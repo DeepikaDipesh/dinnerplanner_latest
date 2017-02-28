@@ -1,6 +1,10 @@
 package se.kth.csc.iprog.dinnerplanner.android;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,12 +12,20 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import se.kth.csc.iprog.dinnerplanner.android.R;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
 import se.kth.csc.iprog.dinnerplanner.model.DishModelSpoon;
+import se.kth.csc.iprog.dinnerplanner.model.SpoonacularAPIClient;
 
+import static com.squareup.picasso.Picasso.*;
 import static se.kth.csc.iprog.dinnerplanner.android.R.drawable.meatballs;
 
 public class DishesAdapter_spoonified extends BaseAdapter {
@@ -55,12 +67,12 @@ public class DishesAdapter_spoonified extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            if (convertView == null) {
+          //  if (convertView == null) {
                 DishModelSpoon dish = dishes_list.get(position);
                 grid = new View(mContext);
                 grid = inflater.inflate(R.layout.gridview_dishes, null);
                 TextView textView = (TextView) grid.findViewById(R.id.textview_dish_name);
-                ImageView imageView = (ImageView)grid.findViewById(R.id.imageview_dish_picture);
+                final ImageView imageView = (ImageView)grid.findViewById(R.id.imageview_dish_picture);
                 textView.setText(dish.getTitle());
 
                 if(dish == selectedDish) {
@@ -73,10 +85,30 @@ public class DishesAdapter_spoonified extends BaseAdapter {
                 //System.out.println(image);
                 //int id = context.getResources().getIdentifier(image, "drawable", context.getPackageName());
                 //imageView.setImageResource(id);
-                imageView.setImageResource(R.drawable.meatballs);
-            } else {
-                grid = (View) convertView;
-            }
+                //imageView.setImageResource(R.drawable.meatballs);
+                String imageUrl = "https://spoonacular.com/recipeImages/"+dish.getId()+"-240x150.jpg";
+                Log.d("ImageURL",imageUrl);
+                with(context).load(imageUrl).into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, LoadedFrom from) {
+                        imageView.setImageBitmap(bitmap);
+                        Log.d("Picasso", "LoadedImage");
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                         Log.d("Picasso","OnBitmapfailed");
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+                        Log.d("Picasso","OnPrepareLoad");
+                    }
+                });
+
+          //  } else {
+         //       grid = (View) convertView;
+          //  }
 
             return grid;
         }

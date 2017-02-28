@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/dipeshmitthalal/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.2.4/a60a5e993c98c864010053cb901b7eab25306568/gson-2.2.4.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="a60a5e993c98c864010053cb901b7eab25306568">
+        <dex dex="/Users/dipeshmitthalal/AndroidStudioProjects/dinnerplanner/app/build/intermediates/pre-dexed/debug/gson-2.2.4-78484c8ac9760945949a561c70c8e22394e3c079.jar" />
+    </item>
+    <item
+        jar="/Users/dipeshmitthalal/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="/Users/dipeshmitthalal/AndroidStudioProjects/dinnerplanner/app/build/intermediates/pre-dexed/debug/picasso-2.5.2-ef64f5bb0769b0f4c480f7af9f611a868c55fcb5.jar" />
+    </item>
+    <item
+        jar="/Users/dipeshmitthalal/.gradle/caches/modules-2/files-2.1/com.loopj.android/android-async-http/1.4.9/386a4339ffe52d5d63e80f9bed8d2b1d1a418249/android-async-http-1.4.9.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="386a4339ffe52d5d63e80f9bed8d2b1d1a418249">
+        <dex dex="/Users/dipeshmitthalal/AndroidStudioProjects/dinnerplanner/app/build/intermediates/pre-dexed/debug/android-async-http-1.4.9-62098f11fe3476051140f96fe96413a8587ddadb.jar" />
+    </item>
+    <item
+        jar="/Users/dipeshmitthalal/.gradle/caches/modules-2/files-2.1/cz.msebera.android/httpclient/4.3.6/526a9f794eab830eae4f23a62c572878b3f491ab/httpclient-4.3.6.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="526a9f794eab830eae4f23a62c572878b3f491ab">
+        <dex dex="/Users/dipeshmitthalal/AndroidStudioProjects/dinnerplanner/app/build/intermediates/pre-dexed/debug/httpclient-4.3.6-26b27d6ab2f6580096b9144eb7f62826f2c174b7.jar" />
+    </item>
+
+</items>

@@ -2,6 +2,8 @@ package se.kth.csc.iprog.dinnerplanner.android;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
@@ -10,6 +12,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.io.BufferedOutputStream;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
