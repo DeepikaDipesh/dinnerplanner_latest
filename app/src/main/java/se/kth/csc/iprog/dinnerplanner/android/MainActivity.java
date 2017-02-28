@@ -25,6 +25,7 @@ import java.util.Set;
 
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
+import se.kth.csc.iprog.dinnerplanner.model.DishModelSpoon;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
 
 
@@ -39,7 +40,7 @@ public class MainActivity extends Activity implements Observer {
     List<Dish> starters_list;
     GridView gridView;
     DishesAdapter dishesAdapter;
-
+    DishesAdapter_spoonified dishAdaptersSpoonified;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -53,10 +54,27 @@ public class MainActivity extends Activity implements Observer {
 
         Set<Dish> starters = dinnerModel.getDishesOfType(Dish.STARTER);
         starters_list = new ArrayList<Dish>(starters);
-        gridView = (GridView) findViewById(R.id.gridViewStarter);
-        dishesAdapter = new DishesAdapter(this, starters_list);
-        gridView.setAdapter(dishesAdapter);
+        List<DishModelSpoon> starters_list_Spoon;
 
+        gridView = (GridView) findViewById(R.id.gridViewStarter);
+      //  dishesAdapter = new DishesAdapter(this, starters_list);
+        dishAdaptersSpoonified = new DishesAdapter_spoonified(this, new List<DishModelSpoon>()
+        );
+        gridView.setAdapter(dishAdaptersSpoonified);
+
+
+        dinnerModel.getDishes(Dish.STARTER, new DinnerModel.AsyncData() {
+            @Override
+            public void onData(Object dishes) {
+     /* hide "waiting" widget ... */
+     /* update the view with new dishes */
+                List<DishModelSpoon> starters_list_Spoon = createList(dishes);
+
+                dishesAdapter.notifyDataSetChanged();
+                gridView.setAdapter(this.get,starters_list_Spoon);
+
+            }
+        });
         Set<Dish> desert = dinnerModel.getDishesOfType(Dish.DESERT);
         final List<Dish> desert_list = new ArrayList<Dish>(desert);
         GridView gridView2 = (GridView) findViewById(R.id.gridViewDesert);
@@ -321,4 +339,13 @@ public class MainActivity extends Activity implements Observer {
 
 
     }
+
+    private static List<DishModelSpoon>  createList(Object O) {
+        List<DishModelSpoon> otherList = new ArrayList<DishModelSpoon>();
+        //do something here
+       otherList= (List<DishModelSpoon>) O;
+        return  otherList;
+
+    }
+
 }
