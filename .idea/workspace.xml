@@ -11,22 +11,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="330a5d9c-98ba-4fcf-ada6-a7f0cab5b5c8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/cache.properties.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/se/kth/csc/iprog/dinnerplanner/model/DinnerModel.java" afterPath="$PROJECT_DIR$/app/src/main/java/se/kth/csc/iprog/dinnerplanner/model/DinnerModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/se/kth/csc/iprog/dinnerplanner/android/DinnerPlannerApplication.java" afterPath="$PROJECT_DIR$/app/src/main/java/se/kth/csc/iprog/dinnerplanner/android/DinnerPlannerApplication.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/se/kth/csc/iprog/dinnerplanner/model/DishModelSpoon.java" afterPath="$PROJECT_DIR$/app/src/main/java/se/kth/csc/iprog/dinnerplanner/model/DishModelSpoon.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/se/kth/csc/iprog/dinnerplanner/android/DishesAdapter_spoonified.java" afterPath="$PROJECT_DIR$/app/src/main/java/se/kth/csc/iprog/dinnerplanner/android/DishesAdapter_spoonified.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/se/kth/csc/iprog/dinnerplanner/model/IDinnerModel.java" afterPath="$PROJECT_DIR$/app/src/main/java/se/kth/csc/iprog/dinnerplanner/model/IDinnerModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/se/kth/csc/iprog/dinnerplanner/android/Main2Activity.java" afterPath="$PROJECT_DIR$/app/src/main/java/se/kth/csc/iprog/dinnerplanner/android/Main2Activity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/se/kth/csc/iprog/dinnerplanner/android/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/se/kth/csc/iprog/dinnerplanner/android/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_selecteddish.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_selecteddish.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/my_selector.xml" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/my_selector.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="dinnerplanner.iws" />
@@ -95,8 +80,8 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/se/kth/csc/iprog/dinnerplanner/android/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.39946738">
-              <caret line="158" column="0" selection-start-line="158" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.01997337">
+              <caret line="159" column="7" selection-start-line="159" selection-start-column="7" selection-end-line="159" selection-end-column="7" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#3460#3795#0" expanded="true" />
@@ -2008,7 +1993,13 @@
       <option name="project" value="LOCAL" />
       <updated>1488319134622</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Massive code refactoring">
+      <created>1488489146157</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1488489146157</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView">
@@ -2098,14 +2089,15 @@
     <MESSAGE value="bug fix for select item" />
     <MESSAGE value="updated version of lib" />
     <MESSAGE value="Starter is loading from Spoon API" />
-    <option name="LAST_COMMIT_MESSAGE" value="Starter is loading from Spoon API" />
+    <MESSAGE value="Massive code refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="Massive code refactoring" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/se/kth/csc/iprog/dinnerplanner/android/MainActivity.java</url>
-          <line>239</line>
+          <line>3</line>
           <properties />
           <option name="timeStamp" value="8" />
         </line-breakpoint>
@@ -2568,8 +2560,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/se/kth/csc/iprog/dinnerplanner/android/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39946738">
-          <caret line="158" column="0" selection-start-line="158" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.01997337">
+          <caret line="159" column="7" selection-start-line="159" selection-start-column="7" selection-end-line="159" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3460#3795#0" expanded="true" />
