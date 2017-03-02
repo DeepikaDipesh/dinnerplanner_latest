@@ -1,8 +1,8 @@
 package se.kth.csc.iprog.dinnerplanner.android;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,24 +12,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
-
-import se.kth.csc.iprog.dinnerplanner.android.R;
-import se.kth.csc.iprog.dinnerplanner.model.Dish;
 import se.kth.csc.iprog.dinnerplanner.model.DishModelSpoon;
-import se.kth.csc.iprog.dinnerplanner.model.SpoonacularAPIClient;
 
 import static com.squareup.picasso.Picasso.*;
-import static se.kth.csc.iprog.dinnerplanner.android.R.drawable.meatballs;
 
-public class DishesAdapter_spoonified extends BaseAdapter {
 
+public class DishesAdapter_spoonified extends BaseAdapter implements View.OnClickListener {
+        private View previousSelectedView;
         private final Context mContext;
         private List<DishModelSpoon> dishes_list;
         DishModelSpoon selectedDish = null;
@@ -67,8 +58,8 @@ public class DishesAdapter_spoonified extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-          //  if (convertView == null) {
-                DishModelSpoon dish = dishes_list.get(position);
+            if (convertView == null) {
+                final DishModelSpoon dish = dishes_list.get(position);
                 grid = new View(mContext);
                 grid = inflater.inflate(R.layout.gridview_dishes, null);
                 TextView textView = (TextView) grid.findViewById(R.id.textview_dish_name);
@@ -80,17 +71,12 @@ public class DishesAdapter_spoonified extends BaseAdapter {
                 }
 
                 Context context = imageView.getContext();
-                String image = dishes_list.get(position).getImage();
-                image = image.substring(0, image.lastIndexOf("."));
-                //System.out.println(image);
-                //int id = context.getResources().getIdentifier(image, "drawable", context.getPackageName());
-                //imageView.setImageResource(id);
-                //imageView.setImageResource(R.drawable.meatballs);
                 String imageUrl = "https://spoonacular.com/recipeImages/"+dish.getId()+"-240x150.jpg";
                 Log.d("ImageURL",imageUrl);
                 with(context).load(imageUrl).into(new Target() {
                     @Override
                     public void onBitmapLoaded(Bitmap bitmap, LoadedFrom from) {
+                        dish.setDishBitmap(bitmap);
                         imageView.setImageBitmap(bitmap);
                         Log.d("Picasso", "LoadedImage");
                     }
@@ -106,12 +92,33 @@ public class DishesAdapter_spoonified extends BaseAdapter {
                     }
                 });
 
-          //  } else {
-         //       grid = (View) convertView;
-          //  }
+           } else {
+                grid = (View) convertView;
+           }
 
             return grid;
         }
+
+
+    @Override
+    public void onClick(View view) {
+        int position = (Integer) view.getTag();
+        DishModelSpoon _selectedDish = getItem(position);
+
+
+        // custom dialog
+        final Dialog dialog = new Dialog(view.getContext());
+        dialog.setContentView(R.layout.activity_selecteddish);
+        dialog.setTitle("You have selected Dish");
+
+        // set the custom dialog components - text, image and button
+        TextView text = (TextView) dialog.findViewById(R.id.selectedDishText);
+        text.setText(_selectedDish.getTitle());
+
+        ImageView imageView = (ImageView) dialog.findViewById(R.id.selectedDishImage);
+        imageView.setImageBitmap(_selectedDish.getDishBitmap());
+    }
+
 
 
 }

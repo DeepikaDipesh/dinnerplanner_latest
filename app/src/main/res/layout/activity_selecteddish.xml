@@ -33,4 +33,14 @@ android:layout_height="fill_parent" >
     android:layout_below="@+id/selectedDishImage"
     />
 
+    <Button
+        android:id="@+id/cancelDishButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:layout_alignTop="@+id/chooseDishButton"
+        android:layout_toRightOf="@+id/chooseDishButton"
+        android:layout_toEndOf="@+id/chooseDishButton" />
+
+
 </RelativeLayout>

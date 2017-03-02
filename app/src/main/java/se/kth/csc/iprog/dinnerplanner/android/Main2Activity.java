@@ -21,6 +21,7 @@ import java.util.Set;
 
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
 import se.kth.csc.iprog.dinnerplanner.model.Dish;
+import se.kth.csc.iprog.dinnerplanner.model.DishModelSpoon;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
 
 public class Main2Activity extends Activity implements View.OnClickListener, Observer{
@@ -85,14 +86,14 @@ public class Main2Activity extends Activity implements View.OnClickListener, Obs
             case R.id.starterrecipe:
                 //display recipe on button click
                 int i=0;
-                Set<Dish> finalStarterList = finallist.getFullMenu();
+                Set<DishModelSpoon> finalStarterList = finallist.getFullMenu();
                 int size = finalStarterList.size();
                 TextView description = (TextView) findViewById(R.id.description);
                 description.setMovementMethod(new ScrollingMovementMethod());
                 description.setText("\n");
-                Iterator<Dish> _finalStarterList = finalStarterList.iterator();
+                Iterator<DishModelSpoon> _finalStarterList = finalStarterList.iterator();
                 while (_finalStarterList.hasNext()) {
-                    Dish starterItem = _finalStarterList.next();
+                    DishModelSpoon starterItem = _finalStarterList.next();
                     int itemtype = starterItem.getType();
                     if (itemtype == 1) {
                         String starterRecipeDescription = starterItem.getDescription();
@@ -108,16 +109,16 @@ public class Main2Activity extends Activity implements View.OnClickListener, Obs
 
             case R.id.maincourserecipe:
                 i= 0;
-                Set<Dish> finalMainCourseList = finallist.getFullMenu();
+                Set<DishModelSpoon> finalMainCourseList = finallist.getFullMenu();
                 size = finalMainCourseList.size();
-                Iterator<Dish> _finalMainCourseList = finalMainCourseList.iterator();
+                Iterator<DishModelSpoon> _finalMainCourseList = finalMainCourseList.iterator();
                 while (_finalMainCourseList.hasNext()) {
-                    Dish mainCourseItem = _finalMainCourseList.next();
+                    DishModelSpoon mainCourseItem = _finalMainCourseList.next();
                     int itemtype = mainCourseItem.getType();
                     if (itemtype == 2) {
                         String mainCourseRecipeDescription = mainCourseItem.getDescription();
                         description = (TextView) findViewById(R.id.description);
-                        description.setText(mainCourseItem.getName()+"\n");
+                        description.setText(mainCourseItem.getTitle()+"\n");
                         description.append(mainCourseRecipeDescription);
                     }
                     else
@@ -131,16 +132,16 @@ public class Main2Activity extends Activity implements View.OnClickListener, Obs
 
             case R.id.desertrecipe:
                 i= 0;
-                Set<Dish> finalDesertList = finallist.getFullMenu();
+                Set<DishModelSpoon> finalDesertList = finallist.getFullMenu();
                 size = finalDesertList.size();
-                Iterator<Dish> _finalDesertList = finalDesertList.iterator();
+                Iterator<DishModelSpoon> _finalDesertList = finalDesertList.iterator();
                 while (_finalDesertList.hasNext()) {
-                    Dish desertItem = _finalDesertList.next();
+                    DishModelSpoon desertItem = _finalDesertList.next();
                     int itemType = desertItem.getType();
                     if (itemType == 3) {
                         String desertRecipeDescription = desertItem.getDescription();
                         description = (TextView) findViewById(R.id.description);
-                        description.setText(desertItem.getName()+"\n");
+                        description.setText(desertItem.getTitle()+"\n");
                         description.append(desertRecipeDescription);
                     }
                     else i++;

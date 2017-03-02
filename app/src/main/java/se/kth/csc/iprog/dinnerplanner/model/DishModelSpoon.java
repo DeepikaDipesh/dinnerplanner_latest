@@ -1,5 +1,10 @@
 package se.kth.csc.iprog.dinnerplanner.model;
 
+import android.graphics.Bitmap;
+
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by dipeshmitthalal on 27/02/17.
  */
@@ -16,7 +21,21 @@ public class DishModelSpoon {
     String[] imageUrls;
     int readyInMinutes;
     String  image;
+    Bitmap dishBitmap;
 
+    public Bitmap getDishBitmap() {
+        return dishBitmap;
+    }
+
+    public void setDishBitmap(Bitmap dishBitmap) {
+        this.dishBitmap = dishBitmap;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    Set<Ingredient> ingredients = new HashSet<Ingredient>();
     public String getTitle() {
         return title;
     }
@@ -56,5 +75,17 @@ public class DishModelSpoon {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Set<Ingredient> getIngredients(){
+        return ingredients;
+    }
+
+    public void addIngredient(Ingredient ing){
+        ingredients.add(ing);
+    }
+
+    public void removeIngredient(Ingredient ing){
+        ingredients.remove(ing);
     }
 }

@@ -2,4 +2,5 @@
 <resources>
 
     <drawable name="redcolor">#F40303</drawable>
+    <drawable name="transparent">#FFF4F3F2</drawable>
 </resources>
