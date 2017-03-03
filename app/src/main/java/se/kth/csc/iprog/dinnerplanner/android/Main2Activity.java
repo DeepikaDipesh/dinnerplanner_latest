@@ -2,29 +2,21 @@ package se.kth.csc.iprog.dinnerplanner.android;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.io.BufferedOutputStream;
-import java.io.InputStream;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
-import se.kth.csc.iprog.dinnerplanner.model.Dish;
-import se.kth.csc.iprog.dinnerplanner.model.DishModelSpoon;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
 
-public class Main2Activity extends Activity implements View.OnClickListener, Observer{
+public class Main2Activity extends Activity implements Observer{
 
     DinnerModel finallist;
     TextView finalParticipantsValue;
@@ -70,12 +62,13 @@ public class Main2Activity extends Activity implements View.OnClickListener, Obs
         ImageButton maincourserecipeButton = (ImageButton) findViewById(R.id.maincourserecipe);
         ImageButton starterreceipeButton = (ImageButton) findViewById(R.id.starterrecipe);
         ImageButton desertrecipeButton = (ImageButton) findViewById(R.id.desertrecipe);
-       starterreceipeButton.setOnClickListener(this);
+     /*  starterreceipeButton.setOnClickListener(this);
         maincourserecipeButton.setOnClickListener(this);
         desertrecipeButton.setOnClickListener(this);
-        ingredientButton.setOnClickListener(this);
+        ingredientButton.setOnClickListener(this);*/
 
     }
+    /*
 
     @Override
     public void onClick(View v) {
@@ -172,7 +165,7 @@ public class Main2Activity extends Activity implements View.OnClickListener, Obs
                 break;
         }
     }
-
+*/
 
         @Override
         public boolean onCreateOptionsMenu (Menu menu){

@@ -2,13 +2,18 @@ package se.kth.csc.iprog.dinnerplanner.model;
 
 import android.graphics.Bitmap;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Created by dipeshmitthalal on 27/02/17.
  */
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DishModelSpoon {
+
     /*"id": 216686,
 			"title": "Pork & noodle pan-fry with sweet & spicy sauce",
 			"readyInMinutes": 10,
@@ -22,20 +27,21 @@ public class DishModelSpoon {
     int readyInMinutes;
     String  image;
     Bitmap dishBitmap;
+    public List<Ingredient> ingredients;
+    public String recipe;
 
     public Bitmap getDishBitmap() {
         return dishBitmap;
     }
 
     public void setDishBitmap(Bitmap dishBitmap) {
-        this.dishBitmap = dishBitmap;
+        this.dishBitmap =  Bitmap.createBitmap(dishBitmap);
     }
 
-    public void setIngredients(Set<Ingredient> ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
-    Set<Ingredient> ingredients = new HashSet<Ingredient>();
     public String getTitle() {
         return title;
     }
@@ -77,15 +83,17 @@ public class DishModelSpoon {
         this.id = id;
     }
 
-    public Set<Ingredient> getIngredients(){
-        return ingredients;
+    public String getRecipe() {
+        return recipe;
     }
 
-    public void addIngredient(Ingredient ing){
-        ingredients.add(ing);
+    public void setRecipe(String recipe) {
+        this.recipe = recipe;
     }
 
-    public void removeIngredient(Ingredient ing){
-        ingredients.remove(ing);
+    public List<Ingredient> getIngredients(){
+        return ingredients==null?new ArrayList<Ingredient>():ingredients;
     }
+
+
 }

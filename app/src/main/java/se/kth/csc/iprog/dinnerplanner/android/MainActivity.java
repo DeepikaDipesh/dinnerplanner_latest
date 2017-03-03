@@ -1,34 +1,20 @@
 package se.kth.csc.iprog.dinnerplanner.android;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.*;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Set;
+import java.io.IOException;
+import java.util.*;
 
 import se.kth.csc.iprog.dinnerplanner.android.view.ItemClickListener;
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
-import se.kth.csc.iprog.dinnerplanner.model.Dish;
 import se.kth.csc.iprog.dinnerplanner.model.DishModelSpoon;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
 
@@ -38,7 +24,7 @@ public class MainActivity extends Activity implements Observer {
     int selected_no_of_guest;
     int totalPricePerDish = 0;
     Set<Ingredient> selectedDishIngredients = new HashSet<Ingredient>();
-    //Dish selectedDish = null;
+
     DishModelSpoon selectedDish = null;
     DinnerModel dinnerModel;
     TextView cost;
@@ -96,32 +82,47 @@ public class MainActivity extends Activity implements Observer {
 
 
         //Populate the list with data, notify the apadpter about data update and refresh grid
-        dinnerModel.getDishes(Dish.STARTER, new DinnerModel.AsyncData() {
+        dinnerModel.getDishes(DinnerModel.STARTER, new DinnerModel.AsyncData() {
             @Override
             public void onData(Object dishes) {
                 List<DishModelSpoon> starters_list_Spoon = convertJSONObjectToList(dishes);
                 startersFromAPI.addAll(starters_list_Spoon);
                 starterDishAdapter.notifyDataSetChanged();
             }
+
+            @Override
+            public void onError(String errorMessage) {
+                Toast.makeText(getApplicationContext(),errorMessage, Toast.LENGTH_SHORT);
+            }
         });
         startersGridView.setOnItemClickListener(new ItemClickListener(startersFromAPI));
 
-        dinnerModel.getDishes(Dish.MAIN, new DinnerModel.AsyncData() {
+        dinnerModel.getDishes(DinnerModel.MAIN, new DinnerModel.AsyncData() {
             @Override
             public void onData(Object dishes) {
                 List<DishModelSpoon> maincourse_list_Spoon = convertJSONObjectToList(dishes);
                 mainCourseFromAPI.addAll(maincourse_list_Spoon);
                 mainCourseDishAdapter.notifyDataSetChanged();
             }
+
+            @Override
+            public void onError(String errorMessage) {
+                Toast.makeText(getApplicationContext(),errorMessage, Toast.LENGTH_SHORT);
+            }
         });
         mainCourseGridView.setOnItemClickListener(new ItemClickListener(mainCourseFromAPI));
 
-        dinnerModel.getDishes(Dish.DESERT, new DinnerModel.AsyncData() {
+        dinnerModel.getDishes(DinnerModel.DESERT, new DinnerModel.AsyncData() {
             @Override
             public void onData(Object dishes) {
                 List<DishModelSpoon> desert_list_Spoon = convertJSONObjectToList(dishes);
                 dessertFromAPI.addAll(desert_list_Spoon);
                 dessertsDishAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Toast.makeText(getApplicationContext(),errorMessage, Toast.LENGTH_SHORT);
             }
         });
         dessertGridView.setOnItemClickListener(new ItemClickListener(dessertFromAPI));
@@ -154,13 +155,6 @@ public class MainActivity extends Activity implements Observer {
 
         final Context context = this;
 
-
-        /**********************Selecting Item from Starter*********************************/
-
-       
-
-        /**********************Create Menu and Move to next activity****************************/
-
         b1.setOnClickListener(new View.OnClickListener()
 
                               {
@@ -177,11 +171,11 @@ public class MainActivity extends Activity implements Observer {
     public String costPrice(DishModelSpoon selectedDish) {
 
         double cost = 0;
-        Set<Ingredient> _presentDishIngredients = selectedDish.getIngredients();
+        List<Ingredient> _presentDishIngredients = selectedDish.getIngredients();
         Iterator<Ingredient> _presentDishIngredientsIterator = _presentDishIngredients.iterator();
         while (_presentDishIngredientsIterator.hasNext()) {
             Ingredient _presentIngredient = _presentDishIngredientsIterator.next();
-            cost += _presentIngredient.getPrice();
+            cost += _presentIngredient.getAmount();
         }
         System.out.println(cost);
         //participants_int = Integer.parseInt(stupid);
@@ -194,17 +188,12 @@ public class MainActivity extends Activity implements Observer {
     public void update(Observable observable, Object o) {
         //  int numguests = Integer.valueOf((Integer) o);
         cost.setText(String.valueOf(dinnerModel.getTotalMenuPrice()));
-        dinnerModel.getAllIngredients();
-        for (Dish d : dinnerModel.getFullMenu()) {
-            if (d.getType() == 1) {
-                dishesAdapter.setSelectedDishId(d);
-            }
-        }
+
     }
 
 
     private static List<DishModelSpoon> convertJSONObjectToList(Object O) {
-        List<DishModelSpoon> dishesFromAPI = new ArrayList<DishModelSpoon>();
+       /* List<DishModelSpoon> dishesFromAPI = new ArrayList<DishModelSpoon>();
         //do something here
 
         Gson gson = new Gson();
@@ -212,5 +201,16 @@ public class MainActivity extends Activity implements Observer {
         }.getType();
         dishesFromAPI = gson.fromJson(O.toString(), type);
         return dishesFromAPI;
+*/
+        ObjectMapper mapper = new ObjectMapper();
+        List<DishModelSpoon> myObjects = null;
+        try {
+            myObjects = mapper.readValue(O.toString(), new TypeReference<List<DishModelSpoon>>(){});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return  myObjects;
     }
+
+
 }

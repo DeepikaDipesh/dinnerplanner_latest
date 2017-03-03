@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,8 +20,10 @@ import java.util.Set;
 import cz.msebera.android.httpclient.Header;
 
 public class DinnerModel extends Observable implements IDinnerModel{
-	
 
+	public static final int STARTER = 1;
+	public static final int MAIN = 2;
+	public static final int DESERT = 3;
 	Set<DishModelSpoon> dishes = new HashSet<DishModelSpoon>();
 	Set<DishModelSpoon> selectedDishes = new HashSet<DishModelSpoon>();
 	public int numberOfguests;
@@ -113,7 +116,7 @@ public class DinnerModel extends Observable implements IDinnerModel{
 			DishModelSpoon _presentDish = selectedDishesIterator.next();
 
 			//1. Get me all ingredients for a dish
-			Set<Ingredient> _presentDishIngredients =_presentDish.getIngredients();
+			List<Ingredient> _presentDishIngredients =_presentDish.getIngredients();
 
 			//2. Look through each of ingredients of present dish and add it to the total Ingredients
 			Iterator<Ingredient> _presentDishIngredientsIterator = _presentDishIngredients.iterator();
@@ -127,14 +130,14 @@ public class DinnerModel extends Observable implements IDinnerModel{
 				//IF the ingredient is already present in the  Total Ingredient List
 				if (_ingredientFromTheList != null) {
 					//Ingredient already present in total ingredient
-					_ingredientFromTheList.setPrice(_ingredientFromTheList.getPrice()+_presentIngredient.getPrice());
+					_ingredientFromTheList.setAmount(_ingredientFromTheList.getAmount()+_presentIngredient.getAmount());
 					//+(_presentIngredient.getPrice()*getNumberOfGuests()));
 					_ingredientFromTheList.setQuantity(_ingredientFromTheList.getQuantity() +( _presentIngredient.getQuantity()*getNumberOfGuests()));
 
 				} else {
 					// Ingredient not present in Total Ingredient
 					//Create a new ingredient and add it
-					Ingredient copyOfTheIngredient = new Ingredient(_presentIngredient.getName(),(_presentIngredient.getQuantity()*getNumberOfGuests()), _presentIngredient.getUnit(), _presentIngredient.getPrice());
+					Ingredient copyOfTheIngredient = new Ingredient(_presentIngredient.getName(),(_presentIngredient.getQuantity()*getNumberOfGuests()), _presentIngredient.getUnit(), _presentIngredient.getAmount());
 					totalIngredients.put(_presentIngredient.getName(),copyOfTheIngredient);
 				}
 
@@ -154,13 +157,14 @@ public class DinnerModel extends Observable implements IDinnerModel{
 		float totalCost = 0;
 
 		while(ingredientIterator.hasNext()){
-			totalCost = (float) (totalCost + (ingredientIterator.next().getPrice() * this.getNumberOfGuests()));
+			totalCost = (float) (totalCost + (ingredientIterator.next().getAmount() * this.getNumberOfGuests()));
 		}
 		return totalCost;
 	}
 
     public interface AsyncData {
         public void onData(Object data);
+		public void onError (String errorMessage);
     }
 
     public void getDishes( int type, final AsyncData callback){
@@ -168,15 +172,15 @@ public class DinnerModel extends Observable implements IDinnerModel{
 		final List<DishModelSpoon> dishesFromAPI;
         final String tag = "API Result";
         RequestParams params = new RequestParams();
-        if (type == Dish.STARTER) {
+        if (type == STARTER) {
             System.out.println("===========Fetching starters============");
             params.add("type", "appetizer");
         }
-        if (type == Dish.MAIN){
+        if (type == MAIN){
             System.out.println("===========Fetching main course============");
             params.add("type","main course");
         }
-        if (type == Dish.DESERT){
+        if (type == DESERT){
             System.out.println("===========Fetching Desserts============");
             params.add("type","dessert");
         }
@@ -226,4 +230,54 @@ public class DinnerModel extends Observable implements IDinnerModel{
         }
 
 
+	public void getIngredients( int id, final AsyncData callback){
+
+		final List<DishModelSpoon> dishesFromAPI;
+		final String tag = "API Result";
+		RequestParams params = new RequestParams();
+
+
+		SpoonacularAPIClient.get("recipes/"+id+"/information", params, new JsonHttpResponseHandler() {
+
+			private ProgressDialog dialog;
+
+			@Override
+			public void onStart() {
+
+			}
+			@Override
+			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+				try {
+					//System.out.println(response.toString());
+					Object extendedIngredients =  response.get("extendedIngredients");
+					System.out.println(extendedIngredients.toString());
+					callback.onData(extendedIngredients);
+					//JSONArray results = response.getJSONArray("results");
+					//System.out.println(results.toString());
+					//Log.d(tag, results.toString());
+					//Gson gson = new Gson();
+					//Type type = new TypeToken<ArrayList<DishModelSpoon>>() {
+					//}.getType();
+					//dishesFromAPI = gson.fromJson(results.toString(), type);
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+
+				}
+			}
+
+			@Override
+			public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+				System.out.println(responseString);
+			}
+
+		});
+
+		System.out.println("==================================================");
+		// callback.onData(data); // You call the callback function once you have the results
+
+
+
+	}
 }

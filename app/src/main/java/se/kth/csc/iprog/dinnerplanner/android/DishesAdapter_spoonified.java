@@ -19,7 +19,7 @@ import se.kth.csc.iprog.dinnerplanner.model.DishModelSpoon;
 import static com.squareup.picasso.Picasso.*;
 
 
-public class DishesAdapter_spoonified extends BaseAdapter implements View.OnClickListener {
+public class DishesAdapter_spoonified extends BaseAdapter {
         private View previousSelectedView;
         private final Context mContext;
         private List<DishModelSpoon> dishes_list;
@@ -36,7 +36,7 @@ public class DishesAdapter_spoonified extends BaseAdapter implements View.OnClic
         }
 
         @Override
-        public DishModelSpoon getItem(int position) {
+        public Object getItem(int position) {
              return dishes_list.get(position);
         }
 
@@ -44,11 +44,11 @@ public class DishesAdapter_spoonified extends BaseAdapter implements View.OnClic
         public long getItemId(int position) {
             return  position;
         }
-
+/*
         public void setSelectedDishId(DishModelSpoon dish){
             selectedDish = dish;
             notifyDataSetChanged();
-        }
+        }*/
 
 
         @Override
@@ -65,10 +65,11 @@ public class DishesAdapter_spoonified extends BaseAdapter implements View.OnClic
                 TextView textView = (TextView) grid.findViewById(R.id.textview_dish_name);
                 final ImageView imageView = (ImageView)grid.findViewById(R.id.imageview_dish_picture);
                 textView.setText(dish.getTitle());
-
+/*
                 if(dish == selectedDish) {
                     grid.setSelected(true);
                 }
+                */
 
                 Context context = imageView.getContext();
                 String imageUrl = "https://spoonacular.com/recipeImages/"+dish.getId()+"-240x150.jpg";
@@ -100,24 +101,6 @@ public class DishesAdapter_spoonified extends BaseAdapter implements View.OnClic
         }
 
 
-    @Override
-    public void onClick(View view) {
-        int position = (Integer) view.getTag();
-        DishModelSpoon _selectedDish = getItem(position);
-
-
-        // custom dialog
-        final Dialog dialog = new Dialog(view.getContext());
-        dialog.setContentView(R.layout.activity_selecteddish);
-        dialog.setTitle("You have selected Dish");
-
-        // set the custom dialog components - text, image and button
-        TextView text = (TextView) dialog.findViewById(R.id.selectedDishText);
-        text.setText(_selectedDish.getTitle());
-
-        ImageView imageView = (ImageView) dialog.findViewById(R.id.selectedDishImage);
-        imageView.setImageBitmap(_selectedDish.getDishBitmap());
-    }
 
 
 

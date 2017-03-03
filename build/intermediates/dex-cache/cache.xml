@@ -29,5 +29,26 @@
         sha1="526a9f794eab830eae4f23a62c572878b3f491ab">
         <dex dex="/Users/dipeshmitthalal/AndroidStudioProjects/dinnerplanner/app/build/intermediates/pre-dexed/debug/httpclient-4.3.6-26b27d6ab2f6580096b9144eb7f62826f2c174b7.jar" />
     </item>
+    <item
+        jar="/Users/dipeshmitthalal/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-annotations/2.7.3/e250c11c1329c7b6b62442a9743befad78be553c/jackson-annotations-2.7.3.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="e250c11c1329c7b6b62442a9743befad78be553c">
+        <dex dex="/Users/dipeshmitthalal/AndroidStudioProjects/dinnerplanner/app/build/intermediates/pre-dexed/debug/jackson-annotations-2.7.3-6a794fe046ff190e7039a700a91a70dc316d46fc.jar" />
+    </item>
+    <item
+        jar="/Users/dipeshmitthalal/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.7.3/1499b854ae9f370409792db5af1b552dc7d9682f/jackson-core-2.7.3.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="1499b854ae9f370409792db5af1b552dc7d9682f">
+        <dex dex="/Users/dipeshmitthalal/AndroidStudioProjects/dinnerplanner/app/build/intermediates/pre-dexed/debug/jackson-core-2.7.3-b305f340848cf94ae58b6c159b35f8d792455c9e.jar" />
+    </item>
+    <item
+        jar="/Users/dipeshmitthalal/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-databind/2.7.3/f12e6cd05cbaecd74d16e685d45b627732939e42/jackson-databind-2.7.3.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="f12e6cd05cbaecd74d16e685d45b627732939e42">
+        <dex dex="/Users/dipeshmitthalal/AndroidStudioProjects/dinnerplanner/app/build/intermediates/pre-dexed/debug/jackson-databind-2.7.3-4f97314266f1a7403e5b6736d361dc702f48eee0.jar" />
+    </item>
 
 </items>
