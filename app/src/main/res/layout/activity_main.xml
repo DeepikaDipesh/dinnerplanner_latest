@@ -10,6 +10,8 @@
     android:id="@+id/mainPage">
 
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,6 +64,13 @@
             android:textStyle="bold"
             android:id="@+id/Cost" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Search"
+            android:id="@+id/search"/>
+
 
     </LinearLayout>
 
@@ -71,7 +80,7 @@
                     android:layout_width="match_parent"
                     android:gravity="center"
                     android:layout_column="0"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
                     android:text="Choose Menu"
                     android:textColor="#000"
                     android:textSize="20sp"

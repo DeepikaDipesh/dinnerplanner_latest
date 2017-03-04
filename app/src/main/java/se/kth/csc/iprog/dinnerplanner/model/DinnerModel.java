@@ -184,6 +184,9 @@ public class DinnerModel extends Observable implements IDinnerModel{
             System.out.println("===========Fetching Desserts============");
             params.add("type","dessert");
         }
+		if (type == 0){
+			params.add("query","dessert");
+		}
 
             SpoonacularAPIClient.get("recipes/search", params, new JsonHttpResponseHandler() {
 
@@ -230,6 +233,63 @@ public class DinnerModel extends Observable implements IDinnerModel{
 
         }
 
+	public void searchDishes( String query, final AsyncData callback){
+
+		final List<DishModelSpoon> dishesFromAPI;
+		final String tag = "API Result";
+		RequestParams params = new RequestParams();
+
+		if (query.isEmpty() || query.trim().length()==0 || query.matches(".*\\d+.*")){
+			callback.onError("Empty search String");
+		}else{
+			params.add("query",query);
+		}
+
+
+		SpoonacularAPIClient.get("recipes/search", params, new JsonHttpResponseHandler() {
+
+			private ProgressDialog dialog;
+
+			@Override
+			public void onStart() {
+
+			}
+			@Override
+			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+				try {
+					System.out.println(response.toString());
+					Object object = response.get("results");
+
+					callback.onData(object);
+					//JSONArray results = response.getJSONArray("results");
+					//System.out.println(results.toString());
+					//Log.d(tag, results.toString());
+					//Gson gson = new Gson();
+					//Type type = new TypeToken<ArrayList<DishModelSpoon>>() {
+					//}.getType();
+					//dishesFromAPI = gson.fromJson(results.toString(), type);
+
+				} catch (JSONException e) {
+					callback.onError(e.getMessage());
+
+				}
+			}
+
+			@Override
+			public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+				System.out.println(responseString);
+				callback.onError(responseString);
+			}
+
+		});
+
+		System.out.println("==================================================");
+		// callback.onData(data); // You call the callback function once you have the results
+
+
+
+	}
 
 	public void getIngredients( int id, final AsyncData callback){
 

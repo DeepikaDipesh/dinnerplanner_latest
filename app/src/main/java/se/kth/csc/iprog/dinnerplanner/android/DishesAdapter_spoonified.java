@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +24,7 @@ import se.kth.csc.iprog.dinnerplanner.model.DishModelSpoon;
 import static com.squareup.picasso.Picasso.*;
 
 
-public class DishesAdapter_spoonified extends BaseAdapter {
+public class DishesAdapter_spoonified extends BaseAdapter implements Filterable {
     private View previousSelectedView;
     private final Context mContext;
     private List<DishModelSpoon> dishes_list;
@@ -123,6 +125,11 @@ public class DishesAdapter_spoonified extends BaseAdapter {
         }
 
         return grid;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return null;
     }
 }
 

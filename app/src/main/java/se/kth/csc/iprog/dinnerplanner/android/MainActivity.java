@@ -67,6 +67,7 @@ public class MainActivity extends Activity implements Observer {
         startersGridView = (GridView) findViewById(R.id.gridViewStarter);
         dessertGridView = (GridView) findViewById(R.id.gridViewDesert);
         mainCourseGridView = (GridView) findViewById(R.id.gridViewMaincourse);
+        Button search = (Button) findViewById(R.id.search);
 
 
         //  dishesAdapter = new DishesAdapter(this, starters_list);
@@ -106,7 +107,7 @@ public class MainActivity extends Activity implements Observer {
 
             @Override
             public void onError(String errorMessage) {
-                Toast.makeText(getApplicationContext(),errorMessage, Toast.LENGTH_SHORT);
+                Toast.makeText(getBaseContext(),errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
         mainCourseGridView.setOnItemClickListener(new ItemClickListener(mainCourseFromAPI));
@@ -121,7 +122,7 @@ public class MainActivity extends Activity implements Observer {
 
             @Override
             public void onError(String errorMessage) {
-                Toast.makeText(getApplicationContext(),errorMessage, Toast.LENGTH_SHORT);
+                Toast.makeText(getBaseContext(),errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
         dessertGridView.setOnItemClickListener(new ItemClickListener(dessertFromAPI));
@@ -165,23 +166,21 @@ public class MainActivity extends Activity implements Observer {
                               }
 
         );
+
+        search.setOnClickListener(new View.OnClickListener()
+
+                            {
+
+                                public void onClick(View v) {
+                                    Intent i_search = new Intent(getApplicationContext(), Main3Activity.class);
+                                    startActivity(i_search);
+                                }
+                            }
+
+        );
     }
 
-    /*public String costPrice(DishModelSpoon selectedDish) {
 
-        double cost = 0;
-        List<Ingredient> _presentDishIngredients = selectedDish.getIngredients();
-        Iterator<Ingredient> _presentDishIngredientsIterator = _presentDishIngredients.iterator();
-        while (_presentDishIngredientsIterator.hasNext()) {
-            Ingredient _presentIngredient = _presentDishIngredientsIterator.next();
-            cost += _presentIngredient.getAmount();
-        }
-        System.out.println(cost);
-        //participants_int = Integer.parseInt(stupid);
-        String totalPricePerDish = String.valueOf(cost * dinnerModel.getNumberOfGuests());
-        return totalPricePerDish;
-
-    }*/
 
     @Override
     public void update(Observable observable, Object o) {

@@ -65,10 +65,12 @@ public class Main2Activity extends Activity implements Observer, View.OnClickLis
         ImageButton maincourserecipeButton = (ImageButton) findViewById(R.id.maincourserecipe);
         ImageButton starterreceipeButton = (ImageButton) findViewById(R.id.starterrecipe);
         ImageButton desertrecipeButton = (ImageButton) findViewById(R.id.desertrecipe);
-      starterreceipeButton.setOnClickListener(this);
+        ImageButton searchrecipeButton = (ImageButton) findViewById(R.id.searchResults);
+        starterreceipeButton.setOnClickListener(this);
         maincourserecipeButton.setOnClickListener(this);
         desertrecipeButton.setOnClickListener(this);
         ingredientButton.setOnClickListener(this);
+        searchrecipeButton.setOnClickListener(this);
 
     }
 
@@ -114,7 +116,7 @@ public class Main2Activity extends Activity implements Observer, View.OnClickLis
                     if (itemtype == 2) {
                         String mainCourseRecipeDescription = mainCourseItem.getInstructions();
                         description = (TextView) findViewById(R.id.description);
-                        description.setText(mainCourseItem.getTitle()+"\n");
+                        description.setText(mainCourseItem.getTitle() + "\n");
                         description.append(mainCourseRecipeDescription);
                     }
                     else
@@ -164,6 +166,29 @@ public class Main2Activity extends Activity implements Observer, View.OnClickLis
                     String itemUnit = _ingredients.getUnit();
                     description.append(itemUnit + "\n");
 
+                }
+                break;
+
+            case R.id.searchResults:
+                i= 0;
+                Set<DishModelSpoon> finalSearchList = finallist.getFullMenu();
+                size = finalSearchList.size();
+                Iterator<DishModelSpoon> _finalSearchList = finalSearchList.iterator();
+                while (_finalSearchList.hasNext()) {
+                    DishModelSpoon searchItem = _finalSearchList.next();
+                    int itemtype = searchItem.getType();
+                    if (itemtype == 4) {
+                        String searchRecipeDescription = searchItem.getInstructions();
+                        description = (TextView) findViewById(R.id.description);
+                        description.setText(searchItem.getTitle()+"\n");
+                        description.append(searchRecipeDescription);
+                    }
+                    else
+                        i++;
+                }
+                if(i==size) {
+                    description = (TextView) findViewById(R.id.description);
+                    description.setText("No item selected, if you would like pleas go to previous page");
                 }
                 break;
         }
