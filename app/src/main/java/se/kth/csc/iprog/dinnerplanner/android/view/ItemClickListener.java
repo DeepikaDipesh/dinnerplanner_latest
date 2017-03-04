@@ -68,7 +68,7 @@ public class ItemClickListener implements AdapterView.OnItemClickListener, Obser
         ImageView imageView = (ImageView) dialog.findViewById(R.id.selectedDishImage);
         imageView.setImageBitmap(selectedDish.getDishBitmap());
         if (selected_no_of_guest == 0){
-            Toast.makeText(view.getContext(),"Please select Number of participants", Toast.LENGTH_LONG).show();
+            Toast.makeText(view.getContext(),"Please select Number of participants", Toast.LENGTH_SHORT).show();
         }
         else {
 
