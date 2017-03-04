@@ -67,7 +67,7 @@ public class MainActivity extends Activity implements Observer {
         startersGridView = (GridView) findViewById(R.id.gridViewStarter);
         dessertGridView = (GridView) findViewById(R.id.gridViewDesert);
         mainCourseGridView = (GridView) findViewById(R.id.gridViewMaincourse);
-        Button search = (Button) findViewById(R.id.search);
+        ImageButton search = (ImageButton) findViewById(R.id.search);
 
 
         //  dishesAdapter = new DishesAdapter(this, starters_list);
@@ -93,7 +93,7 @@ public class MainActivity extends Activity implements Observer {
 
             @Override
             public void onError(String errorMessage) {
-                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT);
+                Toast.makeText(getBaseContext(), errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
         startersGridView.setOnItemClickListener(new ItemClickListener(startersFromAPI));
@@ -107,7 +107,7 @@ public class MainActivity extends Activity implements Observer {
 
             @Override
             public void onError(String errorMessage) {
-                Toast.makeText(getBaseContext(),errorMessage, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
         mainCourseGridView.setOnItemClickListener(new ItemClickListener(mainCourseFromAPI));

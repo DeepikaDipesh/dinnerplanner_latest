@@ -7,12 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
-import se.kth.csc.iprog.dinnerplanner.android.Main2Activity;
 import se.kth.csc.iprog.dinnerplanner.android.MainActivity;
 import se.kth.csc.iprog.dinnerplanner.android.R;
 
-public class FirstActivity extends Activity {
+public class DinnerPlanner extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

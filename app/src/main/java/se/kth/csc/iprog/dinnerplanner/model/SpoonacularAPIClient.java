@@ -13,6 +13,7 @@ public class SpoonacularAPIClient {
         client.addHeader("X-Mashape-Key",API_KEY);
         System.out.println(getAbsoluteUrl(url));
         client.get(getAbsoluteUrl(url), params, responseHandler);
+        client.setConnectTimeout(30000);
     }
 
     public static String getAbsoluteUrl(String relativeUrl) {

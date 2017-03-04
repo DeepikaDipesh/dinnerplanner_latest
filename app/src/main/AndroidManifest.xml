@@ -19,7 +19,7 @@
             android:label="@string/title_activity_main2" >
         </activity>
         <activity
-            android:name="se.kth.csc.iprog.dinnerplanner.FirstActivity"
+            android:name="se.kth.csc.iprog.dinnerplanner.DinnerPlanner"
             android:label="@string/title_activity_first" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
