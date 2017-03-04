@@ -10,10 +10,11 @@ public class SpoonacularAPIClient {
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
-        client.addHeader("X-Mashape-Key",API_KEY);
+        client.addHeader("X-Mashape-Key", API_KEY);
         System.out.println(getAbsoluteUrl(url));
+       // client.setMaxRetriesAndTimeout(0, 30000);
         client.get(getAbsoluteUrl(url), params, responseHandler);
-        client.setConnectTimeout(30000);
+
     }
 
     public static String getAbsoluteUrl(String relativeUrl) {

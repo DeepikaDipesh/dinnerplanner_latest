@@ -107,7 +107,7 @@ public class MainActivity extends Activity implements Observer {
 
             @Override
             public void onError(String errorMessage) {
-                Toast.makeText(getApplicationContext(),errorMessage, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(),errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
         mainCourseGridView.setOnItemClickListener(new ItemClickListener(mainCourseFromAPI));

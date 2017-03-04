@@ -1,12 +1,16 @@
 package se.kth.csc.iprog.dinnerplanner;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
 import se.kth.csc.iprog.dinnerplanner.android.MainActivity;
 import se.kth.csc.iprog.dinnerplanner.android.R;
 
@@ -31,6 +35,7 @@ public class DinnerPlanner extends Activity {
                                  }
 
         );
+
     }
 
 
@@ -55,4 +60,7 @@ public class DinnerPlanner extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
 }

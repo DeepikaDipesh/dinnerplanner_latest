@@ -224,6 +224,15 @@ public class DinnerModel extends Observable implements IDinnerModel{
 					callback.onError(responseString);
 				}
 
+				@Override
+				public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+					callback.onError("Internet Conenction Error"+throwable.getMessage());
+				}
+
+				@Override
+				public void onRetry(int retryNo) {
+					super.onRetry(retryNo);
+				}
 			});
 
 		System.out.println("==================================================");
@@ -282,6 +291,11 @@ public class DinnerModel extends Observable implements IDinnerModel{
 				callback.onError(responseString);
 			}
 
+			@Override
+			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+				callback.onError("Internet Conenction Error"+throwable.getMessage());
+			}
+
 		});
 
 		System.out.println("==================================================");
@@ -330,6 +344,12 @@ public class DinnerModel extends Observable implements IDinnerModel{
 				System.out.println(responseString);
 			}
 
+			@Override
+			public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+				//super.onFailure(statusCode, headers, throwable, errorResponse);
+				//throwable.
+				callback.onError("Internet Conenction Error"+throwable.getMessage());
+			}
 		});
 
 		System.out.println("==================================================");
