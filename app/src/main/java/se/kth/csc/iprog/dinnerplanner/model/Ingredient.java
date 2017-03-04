@@ -11,6 +11,7 @@ public class Ingredient{
 	int id;
 	double quantity;
 
+
 	public Ingredient(String name, double v, String unit, double amount) {
 		this.name=name;
 		this.quantity=v;

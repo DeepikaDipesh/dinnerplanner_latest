@@ -3,8 +3,10 @@ package se.kth.csc.iprog.dinnerplanner.android;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -14,9 +16,10 @@ import java.util.Observer;
 import java.util.Set;
 
 import se.kth.csc.iprog.dinnerplanner.model.DinnerModel;
+import se.kth.csc.iprog.dinnerplanner.model.DishModelSpoon;
 import se.kth.csc.iprog.dinnerplanner.model.Ingredient;
 
-public class Main2Activity extends Activity implements Observer{
+public class Main2Activity extends Activity implements Observer, View.OnClickListener {
 
     DinnerModel finallist;
     TextView finalParticipantsValue;
@@ -30,7 +33,7 @@ public class Main2Activity extends Activity implements Observer{
         setContentView(R.layout.activity_main2);
         Intent receive_intent = getIntent();
         finallist = ((DinnerPlannerApplication)getApplication()).getModel();
-       finallist.addObserver(this);
+        finallist.addObserver(this);
 
         finalParticipantsValue = ((TextView) findViewById(R.id.totalNoOfParticipants));
         finalParticipantsValue.setText(String.valueOf(finallist.getNumberOfGuests()));
@@ -62,13 +65,13 @@ public class Main2Activity extends Activity implements Observer{
         ImageButton maincourserecipeButton = (ImageButton) findViewById(R.id.maincourserecipe);
         ImageButton starterreceipeButton = (ImageButton) findViewById(R.id.starterrecipe);
         ImageButton desertrecipeButton = (ImageButton) findViewById(R.id.desertrecipe);
-     /*  starterreceipeButton.setOnClickListener(this);
+      starterreceipeButton.setOnClickListener(this);
         maincourserecipeButton.setOnClickListener(this);
         desertrecipeButton.setOnClickListener(this);
-        ingredientButton.setOnClickListener(this);*/
+        ingredientButton.setOnClickListener(this);
 
     }
-    /*
+
 
     @Override
     public void onClick(View v) {
@@ -89,8 +92,8 @@ public class Main2Activity extends Activity implements Observer{
                     DishModelSpoon starterItem = _finalStarterList.next();
                     int itemtype = starterItem.getType();
                     if (itemtype == 1) {
-                        String starterRecipeDescription = starterItem.getDescription();
-                        description.append(starterItem.getName() + "\n");
+                        String starterRecipeDescription = starterItem.getInstructions();
+                        description.append(starterItem.getTitle() + "\n");
                         description.append(starterRecipeDescription);
                     } else
                         i++;
@@ -109,7 +112,7 @@ public class Main2Activity extends Activity implements Observer{
                     DishModelSpoon mainCourseItem = _finalMainCourseList.next();
                     int itemtype = mainCourseItem.getType();
                     if (itemtype == 2) {
-                        String mainCourseRecipeDescription = mainCourseItem.getDescription();
+                        String mainCourseRecipeDescription = mainCourseItem.getInstructions();
                         description = (TextView) findViewById(R.id.description);
                         description.setText(mainCourseItem.getTitle()+"\n");
                         description.append(mainCourseRecipeDescription);
@@ -132,7 +135,7 @@ public class Main2Activity extends Activity implements Observer{
                     DishModelSpoon desertItem = _finalDesertList.next();
                     int itemType = desertItem.getType();
                     if (itemType == 3) {
-                        String desertRecipeDescription = desertItem.getDescription();
+                        String desertRecipeDescription = desertItem.getInstructions();
                         description = (TextView) findViewById(R.id.description);
                         description.setText(desertItem.getTitle()+"\n");
                         description.append(desertRecipeDescription);
@@ -165,7 +168,7 @@ public class Main2Activity extends Activity implements Observer{
                 break;
         }
     }
-*/
+
 
         @Override
         public boolean onCreateOptionsMenu (Menu menu){

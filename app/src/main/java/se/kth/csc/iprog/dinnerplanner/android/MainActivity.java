@@ -85,22 +85,21 @@ public class MainActivity extends Activity implements Observer {
         dinnerModel.getDishes(DinnerModel.STARTER, new DinnerModel.AsyncData() {
             @Override
             public void onData(Object dishes) {
-                List<DishModelSpoon> starters_list_Spoon = convertJSONObjectToList(dishes);
+                List<DishModelSpoon> starters_list_Spoon = convertJSONObjectToList(dishes,DinnerModel.STARTER);
                 startersFromAPI.addAll(starters_list_Spoon);
                 starterDishAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onError(String errorMessage) {
-                Toast.makeText(getApplicationContext(),errorMessage, Toast.LENGTH_SHORT);
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT);
             }
         });
         startersGridView.setOnItemClickListener(new ItemClickListener(startersFromAPI));
-
         dinnerModel.getDishes(DinnerModel.MAIN, new DinnerModel.AsyncData() {
             @Override
             public void onData(Object dishes) {
-                List<DishModelSpoon> maincourse_list_Spoon = convertJSONObjectToList(dishes);
+                List<DishModelSpoon> maincourse_list_Spoon = convertJSONObjectToList(dishes,DinnerModel.MAIN);
                 mainCourseFromAPI.addAll(maincourse_list_Spoon);
                 mainCourseDishAdapter.notifyDataSetChanged();
             }
@@ -115,7 +114,7 @@ public class MainActivity extends Activity implements Observer {
         dinnerModel.getDishes(DinnerModel.DESERT, new DinnerModel.AsyncData() {
             @Override
             public void onData(Object dishes) {
-                List<DishModelSpoon> desert_list_Spoon = convertJSONObjectToList(dishes);
+                List<DishModelSpoon> desert_list_Spoon = convertJSONObjectToList(dishes, DinnerModel.DESERT);
                 dessertFromAPI.addAll(desert_list_Spoon);
                 dessertsDishAdapter.notifyDataSetChanged();
             }
@@ -168,7 +167,7 @@ public class MainActivity extends Activity implements Observer {
         );
     }
 
-    public String costPrice(DishModelSpoon selectedDish) {
+    /*public String costPrice(DishModelSpoon selectedDish) {
 
         double cost = 0;
         List<Ingredient> _presentDishIngredients = selectedDish.getIngredients();
@@ -182,7 +181,7 @@ public class MainActivity extends Activity implements Observer {
         String totalPricePerDish = String.valueOf(cost * dinnerModel.getNumberOfGuests());
         return totalPricePerDish;
 
-    }
+    }*/
 
     @Override
     public void update(Observable observable, Object o) {
@@ -192,7 +191,7 @@ public class MainActivity extends Activity implements Observer {
     }
 
 
-    private static List<DishModelSpoon> convertJSONObjectToList(Object O) {
+    private static List<DishModelSpoon> convertJSONObjectToList(Object O, int type) {
        /* List<DishModelSpoon> dishesFromAPI = new ArrayList<DishModelSpoon>();
         //do something here
 
@@ -206,6 +205,9 @@ public class MainActivity extends Activity implements Observer {
         List<DishModelSpoon> myObjects = null;
         try {
             myObjects = mapper.readValue(O.toString(), new TypeReference<List<DishModelSpoon>>(){});
+            for(DishModelSpoon obj:myObjects){
+                obj.setType(type);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

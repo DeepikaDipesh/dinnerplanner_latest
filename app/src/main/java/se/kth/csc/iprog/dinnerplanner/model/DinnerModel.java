@@ -132,12 +132,12 @@ public class DinnerModel extends Observable implements IDinnerModel{
 					//Ingredient already present in total ingredient
 					_ingredientFromTheList.setAmount(_ingredientFromTheList.getAmount()+_presentIngredient.getAmount());
 					//+(_presentIngredient.getPrice()*getNumberOfGuests()));
-					_ingredientFromTheList.setQuantity(_ingredientFromTheList.getQuantity() +( _presentIngredient.getQuantity()*getNumberOfGuests()));
+					_ingredientFromTheList.setQuantity(_ingredientFromTheList.getAmount() +( _presentIngredient.getAmount()*getNumberOfGuests()));
 
 				} else {
 					// Ingredient not present in Total Ingredient
 					//Create a new ingredient and add it
-					Ingredient copyOfTheIngredient = new Ingredient(_presentIngredient.getName(),(_presentIngredient.getQuantity()*getNumberOfGuests()), _presentIngredient.getUnit(), _presentIngredient.getAmount());
+					Ingredient copyOfTheIngredient = new Ingredient(_presentIngredient.getName(),(_presentIngredient.getAmount()*getNumberOfGuests()), _presentIngredient.getUnit(), _presentIngredient.getAmount());
 					totalIngredients.put(_presentIngredient.getName(),copyOfTheIngredient);
 				}
 
@@ -218,6 +218,7 @@ public class DinnerModel extends Observable implements IDinnerModel{
 				@Override
 				public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
 					System.out.println(responseString);
+					callback.onError(responseString);
 				}
 
 			});
@@ -248,11 +249,11 @@ public class DinnerModel extends Observable implements IDinnerModel{
 			@Override
 			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
-				try {
+
 					//System.out.println(response.toString());
-					Object extendedIngredients =  response.get("extendedIngredients");
-					System.out.println(extendedIngredients.toString());
-					callback.onData(extendedIngredients);
+					//Object extendedIngredients =  response.get("extendedIngredients");
+					//System.out.println(extendedIngredients.toString());
+					callback.onData(response);
 					//JSONArray results = response.getJSONArray("results");
 					//System.out.println(results.toString());
 					//Log.d(tag, results.toString());
@@ -261,10 +262,7 @@ public class DinnerModel extends Observable implements IDinnerModel{
 					//}.getType();
 					//dishesFromAPI = gson.fromJson(results.toString(), type);
 
-				} catch (JSONException e) {
-					e.printStackTrace();
 
-				}
 			}
 
 			@Override

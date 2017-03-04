@@ -29,6 +29,24 @@ public class DishModelSpoon {
     Bitmap dishBitmap;
     public List<Ingredient> ingredients;
     public String recipe;
+    int type;
+    String instructions;
+
+    public String getInstructions() {
+        return instructions;
+    }
+
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public Bitmap getDishBitmap() {
         return dishBitmap;

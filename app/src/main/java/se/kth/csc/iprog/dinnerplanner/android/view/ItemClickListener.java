@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -18,6 +19,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -50,6 +53,7 @@ public class ItemClickListener implements AdapterView.OnItemClickListener, Obser
         this.previousSelectedView = view;
         long itemIdAtPosition = parent.getItemIdAtPosition(position);
         final DishModelSpoon selectedDish = dishesList.get((int) itemIdAtPosition);
+        final int selected_no_of_guest = DinnerPlannerApplication.getModel().getNumberOfGuests();
 
         // custom dialog
         final Dialog dialog = new Dialog(parent.getContext());
@@ -63,28 +67,39 @@ public class ItemClickListener implements AdapterView.OnItemClickListener, Obser
         Log.d("Selected Dish", String.valueOf(selectedDish.getTitle()));
         ImageView imageView = (ImageView) dialog.findViewById(R.id.selectedDishImage);
         imageView.setImageBitmap(selectedDish.getDishBitmap());
+        if (selected_no_of_guest == 0){
+            Toast.makeText(parent.getContext(),"Please select Number of participants", Toast.LENGTH_LONG);
+        }
+        else {
 
-       dinnerModel.getIngredients(selectedDish.getId(), new DinnerModel.AsyncData() {
+            dinnerModel.getIngredients(selectedDish.getId(), new DinnerModel.AsyncData() {
 
-           @Override
-           public void onData(Object data) {
-               List<Ingredient> ingredientList = convertJSONObjectToList(data);
-               selectedDish.setIngredients(ingredientList);
-               //startersFromAPI.addAll(starters_list_Spoon);
-               //starterDishAdapter.notifyDataSetChanged();
-               String totalPricePerDishDisplay = costPrice(selectedDish);
+                @Override
+                public void onData(Object data) {
+                    try {
+                        JSONObject jsonObject = (JSONObject) data;
+                        selectedDish.setInstructions(jsonObject.getString("instructions"));
 
-               price.setText("Total cost for" + dinnerModel.getNumberOfGuests() + " guests: " + totalPricePerDishDisplay);
-               dialog.show();
-           }
+                        List<Ingredient> ingredientList = convertJSONArrayToList((JSONArray) jsonObject.get("extendedIngredients"));
+                        selectedDish.setIngredients(ingredientList);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-           @Override
-           public void onError(String errorMessage) {
+                    String totalPricePerDishDisplay = costPrice(selectedDish);
 
-           }
-       });
+                    price.setText("Total cost for" + selected_no_of_guest + " guests: " + totalPricePerDishDisplay);
+                    dialog.show();
+                }
 
-        int selected_no_of_guest = DinnerPlannerApplication.getModel().getNumberOfGuests();
+                @Override
+                public void onError(String errorMessage) {
+
+                }
+            });
+        }
+
+
 
         //price of dish for total no.of.guests
 
@@ -131,27 +146,21 @@ public class ItemClickListener implements AdapterView.OnItemClickListener, Obser
             cost += _presentIngredient.getAmount();
         }
         System.out.println(cost);
+
         //participants_int = Integer.parseInt(stupid);
         String totalPricePerDish = String.valueOf(cost * dinnerModel.getNumberOfGuests());
         return totalPricePerDish;
 
     }
-    private static List<Ingredient> convertJSONObjectToList(Object O) {
-      /*  ObjectMapper mapper = new ObjectMapper();
-        List<Ingredient> myObjects = null;
-        try {
-            myObjects = mapper.readValue(O.toString(), new TypeReference<List<Ingredient>>(){});
+    private static List<Ingredient> convertJSONArrayToList(JSONArray jsonArrayOfIngredients) {
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-       List<Ingredient> ingredientsFromAPI;
+        List<Ingredient> ingredientsFromAPI;
         //do something here
 
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<Ingredient>>() {
         }.getType();
-        ingredientsFromAPI = gson.fromJson(O.toString(), type);
+        ingredientsFromAPI = gson.fromJson(jsonArrayOfIngredients.toString(), type);
         return ingredientsFromAPI;
     }
 
