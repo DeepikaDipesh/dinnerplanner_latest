@@ -1,5 +1,30 @@
 <!-- We include the sidebar as it is shared across two screens. -->
-<ng-include src="'partials/dinner-sidebar.html'" ng-controller="DinnerCtrl"></ng-include>
+<div id="dishView" ng-controller="DishCtrl">
+
+    <ng-include src="'partials/dinner-sidebar.html'" ng-controller="DinnerCtrl"></ng-include>
 
 <!-- TODO in Lab 5: Display the dish information including image, Description, 
 Instructions, Ingredients and total cost. -->
+<div class="selected dish">
+
+           {{selecteddish.title}}<br>
+           {{selected_DishType}}<br>
+           <img ng-src="https://spoonacular.com/recipeImages/{{selected_DishId}}-240x150.jpg"/><br>
+            Ingredients
+        <ul>
+           <li ng-repeat="Ingredients in selecteddish.extendedIngredients">
+                {{Ingredients.name}} :
+                {{Ingredients.amount}}
+                {{Ingredients.unit}}
+
+            </li>
+        </ul>
+            Dish ready in {{selecteddish.pricePerServing}} minutes<br>
+            Instruction : {{selecteddish.instructions}}
+            Amount: {{selecteddish_Price}}
+</div>
+<button id="selectDish" ng-click="addDishtoMenu_Dishhtml(selecteddish ,selected_DishType)"> Select </button>
+
+<button id="cancelDish"> <a ng-href="#!/search">Go back</a> </button>
+
+</div>
