@@ -6,20 +6,6 @@
 dinnerPlannerApp.factory('Dinner',function ($resource,$cookies,$rootScope) {
     var that = this;
 
- /* var numberOfGuest = 0;
-
-
-  this.setNumberOfGuests = function(num) {
-    numberOfGuest = num;
-  }
-
-  this.getNumberOfGuests = function() {
-    return numberOfGuest;
-  }*/
-    //function that returns all dishes of specific type (i.e. "starter", "main dish" or "dessert")
-    //you can use the filter argument to filter out the dish by name or ingredient (use for search)
-
-
 
   // TODO in Lab 5: Add your model code from previous labs
   // feel free to remove above example code
@@ -29,6 +15,7 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookies,$rootScope) {
     //DinnerModel Object constructor
 
         var menu = {};
+    $rootScope.testMenu = {};
         var cookiesMenuId = [];
         var dishesRetrievedBasedOnCookies = [];
         var numberOfGuests = 0;
@@ -38,10 +25,6 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookies,$rootScope) {
         } else{
             numberOfGuests = $cookies.get('numberOfGuests');
         }
-
-
-
-
 
     this.setNumberOfGuests = function(num) {
             if(num>0) {
@@ -107,12 +90,16 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookies,$rootScope) {
             dinnerMenuInCookies[type]=dish.id
             $cookies.putObject("dinnerMenuInCookies",dinnerMenuInCookies);
             that.broadcastItem();
+            $rootScope.testMenu = menu;
           //  console.log(cookiesMenu);
         }
 
         //Removes dish from menu
         this.removeDishFromMenu = function(dish) {
             delete menu[dish.type];
+            delete dinnerMenuInCookies[dish.type]
+            $cookies.putObject("dinnerMenuInCookies", dinnerMenuInCookies);
+            that.broadcastItem();
           //  notifyObservers();
         }
 
@@ -175,10 +162,7 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookies,$rootScope) {
     else{
         dinnerMenuInCookies={};
     }
-    // Angular service needs to return an object that has all the
-  // methods created in it. You can consider that this is instead
-  // of calling var model = new DinnerModel() we did in the previous labs
-  // This is because Angular takes care of creating it when needed.
+
    function  convertDishesRetrievedBasedOnCookiesToDish(){
 
         var inverteddinnerMenuInCookies = {};
@@ -193,15 +177,18 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookies,$rootScope) {
             that.addDishToMenu(dish, inverteddinnerMenuInCookies[dish.id]);
 
         }
-       // that.broadcastItem();
-      // $scope.selectedMenu = that.getFullMenu();
-        //use dishesRetrievedBasedOnCookies and add it to dishmenu
         console.log(inverteddinnerMenuInCookies);
     }
 
     this.broadcastItem = function () {
         $rootScope.$broadcast('menuUpdated');
     }
+
+    // Angular service needs to return an object that has all the
+    // methods created in it. You can consider that this is instead
+    // of calling var model = new DinnerModel() we did in the previous labs
+    // This is because Angular takes care of creating it when needed.
+
     return this;
 
 });

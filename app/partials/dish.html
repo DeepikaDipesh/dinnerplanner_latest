@@ -7,24 +7,51 @@
 Instructions, Ingredients and total cost. -->
 <div class="selected dish">
 
-           {{selecteddish.title}}<br>
-           {{selected_DishType}}<br>
-           <img ng-src="https://spoonacular.com/recipeImages/{{selected_DishId}}-240x150.jpg"/><br>
-            Ingredients
-        <ul>
-           <li ng-repeat="Ingredients in selecteddish.extendedIngredients">
-                {{Ingredients.name}} :
-                {{Ingredients.amount}}
-                {{Ingredients.unit}}
+    <h2>{{selecteddish.title}}</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <img class="img-rounded" ng-src="https://spoonacular.com/recipeImages/{{selected_DishId}}-480x360.jpg"/>
+        </div>
 
-            </li>
-        </ul>
-            Dish ready in {{selecteddish.pricePerServing}} minutes<br>
-            Instruction : {{selecteddish.instructions}}
-            Amount: {{selecteddish_Price}}
+        <div class="col-md-4 bg-warning" style="padding:2%; margin-right: 2%; margin-left: 2%">
+            <h3>Ingredients</h3>
+            <table id="sideMenuTable" class="table">
+                <thead>
+                <tr>
+                    <th>Ingredient Name</th>
+                    <th>Quantity</th>
+                    <th>Price(in SEK)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="Ingredients in selecteddish.extendedIngredients">
+                    <td> {{Ingredients.name}}</td>
+                    <td> {{Ingredients.amount}}{{Ingredients.unit}}</td>
+                    <td> {{Ingredients.amount}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <h4>Total Price:{{selecteddish_Price}} SEK</h4>
+            <button id="selectDish" class="btn btn-warning"
+                    ng-click="addDishtoMenu_Dishhtml(selecteddish ,selected_DishType)">
+                Select Dish <span class="glyphicon glyphicon-ok"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="row" style="margin-left:15%">
+        <div class="col-md-8">
+            <h3>Instruction</h3>
+            <p>{{selecteddish.instructions}}</p>
+            <p>Dish ready in {{selecteddish.pricePerServing}} minutes</p>
+        </div>
+    </div>
 </div>
-<button id="selectDish" ng-click="addDishtoMenu_Dishhtml(selecteddish ,selected_DishType)"> Select </button>
 
-<button id="cancelDish"> <a ng-href="#!/search">Go back</a> </button>
+    <button id="cancelDish" class="btn btn-primary" style="margin-left: 45%">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        <a href="#!/search" class="btn btn-primary">Back to search</a>
+    </button>
+
 
 </div>

@@ -27,9 +27,13 @@ this with Total price of the menu -->
             </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="slectedDish_Display in selectedMenu">
-            <td>{{slectedDish_Display.title}}</td>
-            <td>{{slectedDish_Display.price}}</td>
+        <tr ng-repeat="selectedDish_Display in selectedMenu track by $index">
+            <td>{{selectedDish_Display.title}}</td>
+            <td>{{getPrice(selectedDish_Display)}}</td>
+            <td>
+                <button ng-click="removeDish(selectedDish_Display)"><span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </td>
         </tr>
         </tbody>
   </table>
@@ -37,7 +41,7 @@ this with Total price of the menu -->
 
 
     <h4 class="text-primary text-center">
-        Total price: <span id="totalPrice"></span> SEK
+        Total price: {{totalPrice()}}<span id="totalPrice"></span> SEK
     </h4>
 
     <button id="startButton" class="btn btn-primary">

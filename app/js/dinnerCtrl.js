@@ -24,7 +24,6 @@ dinnerPlannerApp.controller('DinnerCtrl', function ($scope,Dinner,$cookies) {
     }
 
     $scope.function1=function(){
-        //your code
         $scope.selectedMenu = Dinner.getFullMenu();
     }
 
@@ -35,6 +34,18 @@ dinnerPlannerApp.controller('DinnerCtrl', function ($scope,Dinner,$cookies) {
 
     }
 
+    $scope.getPrice = function (selectedDish_Display) {
+        return Dinner.getDishPrice(selectedDish_Display) * $scope.numberOfGuests;
+    }
+
+    $scope.totalPrice = function () {
+        return Dinner.getTotalMenuPrice();
+    }
+
+    $scope.removeDish = function (selectedDish_Display) {
+        Dinner.removeDishFromMenu(selectedDish_Display);
+    }
+
     //console.log($scope.selectedMenu[0]);
 
     // TODO in Lab 5: Implement the methods to get the dinner menu
@@ -43,5 +54,7 @@ dinnerPlannerApp.controller('DinnerCtrl', function ($scope,Dinner,$cookies) {
     $scope.$on('menuUpdated', function() {
         $scope.selectedMenu = Dinner.getFullMenu();
     });
+
+
 });
 
